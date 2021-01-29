@@ -7,7 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\V2\PostResource;
-use App\Http\Resources\V2\PostResourceCollection;
+use App\Http\Resources\V2\PostCollection;
 
 class PostController extends Controller
 {
@@ -16,9 +16,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        
+        return new PostCollection(Post::latest()->paginate());
+
     }
 
     /**
@@ -38,9 +39,8 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
-    {
-        //
+    public function show(Post $post) {
+        return new PostResource($post);
     }
 
     /**

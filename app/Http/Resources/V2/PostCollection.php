@@ -12,8 +12,22 @@ class PostCollection extends ResourceCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
+    // Formatea cada resultado como un resultado individual
+    public $collects = PostResource::class;
+
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data" => $this->collection,
+            "meta" => [
+                "organization" => "Platzi",
+                "authors" => [
+                    "RetaxMaster",
+                    "Platzi"
+                ]
+            ],
+            "type" => "articles"
+        ];
     }
 }
