@@ -10,15 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
     
-    public function login() {
+    public function login(Request $request) {
 
         $this->validateLogin($request);
 
-        // login true
+        if (Auth::attempt($request->only("email", "password"))) {
+            
+            return response()->json([
+                "token" => $request->createToken($request->name)->plainTextToken,
+                "message" => "Success"
+            ]);
 
-        
+        }
 
-        // login false
+        return response()->json([
+            "message" => "Unauthorized"
+        ], 401);
         
     }
 
